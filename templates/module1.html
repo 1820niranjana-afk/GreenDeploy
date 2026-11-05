@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy-Aware CI/CD | GreenDeploy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f7f2;
+            color: #243b2c;
+        }
+
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            background: #123d29;
+            color: white;
+            position: fixed;
+            padding: 30px 20px;
+        }
+
+        .sidebar h2 {
+            color: #8ef0a8;
+            margin-bottom: 40px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px 10px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .sidebar a:hover {
+            background: #276342;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 35px;
+        }
+
+        h1 {
+            color: #174d30;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #718076;
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .panel h2 {
+            color: #176b35;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 8px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d1dfd3;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        button {
+            background: #238746;
+            color: white;
+            padding: 13px 22px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: #145c2e;
+        }
+
+        .info {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            color: #245c36;
+        }
+
+        .stages {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .stage {
+            background: #f1f7f2;
+            padding: 20px;
+            text-align: center;
+            border-radius: 9px;
+            border: 1px solid #dce9dd;
+        }
+
+        .stage h3 {
+            color: #176b35;
+            margin-bottom: 10px;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .metric {
+            background: #f1f7f2;
+            padding: 20px;
+            border-radius: 9px;
+        }
+
+        .metric h3 {
+            color: #66776a;
+            font-size: 14px;
+        }
+
+        .metric p {
+            color: #176b35;
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        #message {
+            margin-top: 15px;
+            color: #176b35;
+            font-weight: bold;
+        }
+
+        #pipelineMessage {
+            margin-top: 15px;
+            color: #176b35;
+            font-weight: bold;
+        }
+
+        @media(max-width: 800px) {
+            .sidebar {
+                width: 170px;
+            }
+
+            .main {
+                margin-left: 170px;
+                padding: 20px;
+            }
+
+            .stages, .metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>🌱 GreenDeploy</h2>
+        <a href="/">Dashboard</a>
+        <a href="/module1">Module 1 - CI/CD</a>
+        <a href="/module2">Module 2 - Cloud</a>
+        <a href="/reports">Reports</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <h1>Energy-Aware CI/CD Pipeline Optimization</h1>
+
+        <p class="subtitle">
+            Monitor pipeline performance and estimate energy consumption.
+        </p>
+
+        <!-- GitHub Repository -->
+        <div class="panel">
+
+            <h2>Connect GitHub Repository</h2>
+
+            <form id="repoForm">
+
+                <label>GitHub Repository URL</label>
+
+                <input
+                    type="url"
+                    id="repoUrl"
+                    value="https://github.com/1820niranjana-afk/GreenDeploy"
+                    required
+                >
+
+                <label>Select Branch</label>
+
+                <select id="branch">
+                    <option value="main" selected>main</option>
+                </select>
+
+                <button type="submit">
+                    Connect Repository
+                </button>
+
+            </form>
+
+            <div class="info">
+                Repository: GreenDeploy<br>
+                Default Branch: main
+            </div>
+
+            <p id="message"></p>
+
+        </div>
+
+        <!-- CI/CD Pipeline -->
+        <div class="panel">
+
+            <h2>CI/CD Pipeline Stages</h2>
+
+            <div class="stages">
+
+                <div class="stage">
+                    <h3>01</h3>
+                    <p>Source Code</p>
+                </div>
+
+                <div class="stage">
+                    <h3>02</h3>
+                    <p>Build</p>
+                </div>
+
+                <div class="stage">
+                    <h3>03</h3>
+                    <p>Testing</p>
+                </div>
+
+                <div class="stage">
+                    <h3>04</h3>
+                    <p>Deployment</p>
+                </div>
+
+            </div>
+
+            <button onclick="runPipeline()">
+                Start Pipeline
+            </button>
+
+            <p id="pipelineMessage"></p>
+
+        </div>
+
+        <!-- Energy Monitoring -->
+        <div class="panel">
+
+            <h2>Energy and Resource Monitoring</h2>
+
+            <div class="metrics">
+
+                <div class="metric">
+                    <h3>CPU Usage</h3>
+                    <p id="cpu">--</p>
+                </div>
+
+                <div class="metric">
+                    <h3>RAM Usage</h3>
+                    <p id="ram">--</p>
+                </div>
+
+                <div class="metric">
+                    <h3>Estimated Energy</h3>
+                    <p id="energy">--</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+
+        // GitHub Repository Form
+        document.getElementById("repoForm").addEventListener(
+            "submit", function(event) {
+
+                event.preventDefault();
+
+                let url = document.getElementById("repoUrl").value;
+                let branch = document.getElementById("branch").value;
+
+                document.getElementById("message").innerText =
+                    "Repository details entered: " + url +
+                    " | Branch: " + branch;
+
+            }
+        );
+
+        // Start Pipeline Demo
+        function runPipeline() {
+
+            document.getElementById("pipelineMessage").innerText =
+                "Demo pipeline started! Actual build and testing integration will be added next.";
+
+        }
+
+        // Energy Monitoring Variables
+        let totalCpu = 0;
+        let cpuSamples = 0;
+        let monitoringStartTime = Date.now();
+
+        // Update CPU, RAM and Energy
+        async function updateMetrics() {
+
+            try {
+
+                const response = await fetch("/api/metrics");
+
+                if (!response.ok) {
+                    throw new Error("Unable to get metrics");
+                }
+
+                const data = await response.json();
+
+                // Display CPU Usage
+                document.getElementById("cpu").innerText =
+                    data.cpu + "%";
+
+                // Display RAM Usage
+                document.getElementById("ram").innerText =
+                    data.ram + "%";
+
+                // Calculate Average CPU
+                totalCpu += data.cpu;
+                cpuSamples++;
+
+                let averageCpu = totalCpu / cpuSamples;
+
+                // Estimate Laptop Power in Watts
+                let estimatedPower = 15 + (averageCpu * 0.35);
+
+                // Calculate Monitoring Time
+                let elapsedTime = Date.now() - monitoringStartTime;
+
+                // Calculate Energy in kWh
+                let energy =
+                    (estimatedPower * elapsedTime) / 3600000000;
+
+                // Display Estimated Energy
+                document.getElementById("energy").innerText =
+                    energy.toFixed(6) + " kWh";
+
+            }
+
+            catch (error) {
+
+                console.log("Unable to fetch system metrics");
+
+            }
+
+        }
+
+        // Start Monitoring Immediately
+        updateMetrics();
+
+        // Refresh Metrics Every 2 Seconds
+        setInterval(updateMetrics, 2000);
+
+    </script>
+
+</body>
+</html>

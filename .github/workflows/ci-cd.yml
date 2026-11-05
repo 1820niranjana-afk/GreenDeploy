@@ -27,16 +27,16 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flask psutil
+          pip install flask psutil pytest
 
       - name: Check Python Syntax
         run: |
           python -m py_compile app.py
           python -m compileall -q modules
 
-      - name: Run Pipeline Tests
+      - name: Run Automated Tests
         run: |
-          python -c "import flask, psutil; print('Dependencies installed successfully')"
+          python -m pytest tests/ -v
 
       - name: Pipeline Completed
         run: echo "GreenDeploy CI/CD pipeline completed successfully!"
