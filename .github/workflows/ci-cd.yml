@@ -1,0 +1,42 @@
+
+name: GreenDeploy CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flask psutil
+
+      - name: Check Python Syntax
+        run: |
+          python -m py_compile app.py
+          python -m compileall -q modules
+
+      - name: Run Pipeline Tests
+        run: |
+          python -c "import flask, psutil; print('Dependencies installed successfully')"
+
+      - name: Pipeline Completed
+        run: echo "GreenDeploy CI/CD pipeline completed successfully!"
