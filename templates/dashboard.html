@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenDeploy Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f7f2;
+            color: #243b2c;
+        }
+
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            background: #123d29;
+            color: white;
+            position: fixed;
+            padding: 30px 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 40px;
+            color: #8ef0a8;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .sidebar a:hover {
+            background: #276342;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 35px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #174d30;
+        }
+
+        .welcome {
+            color: #66776a;
+            margin-top: 8px;
+        }
+
+        .status {
+            background: #d9f7df;
+            color: #176b35;
+            padding: 12px 18px;
+            border-radius: 20px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .card h3 {
+            color: #637568;
+            font-size: 15px;
+        }
+
+        .card h2 {
+            margin-top: 15px;
+            color: #176b35;
+            font-size: 28px;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .module {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            border-top: 5px solid #2b9b53;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .module h2 {
+            color: #176b35;
+            margin-bottom: 15px;
+        }
+
+        .module p {
+            color: #66776a;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: #238746;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #145c2e;
+        }
+
+        .activity {
+            background: white;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 12px;
+        }
+
+        .activity h2 {
+            margin-bottom: 15px;
+            color: #174d30;
+        }
+
+        .activity p {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        @media (max-width: 800px) {
+            .sidebar {
+                width: 170px;
+            }
+
+            .main {
+                margin-left: 170px;
+                padding: 20px;
+            }
+
+            .cards, .modules {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2>🌱 GreenDeploy</h2>
+        <a href="/">Dashboard</a>
+        <a href="/module1">Module 1 - CI/CD</a>
+        <a href="/module2">Module 2 - Cloud</a>
+        <a href="/reports">Reports</a>
+    </div>
+
+    <div class="main">
+
+        <div class="header">
+            <div>
+                <h1>Dashboard</h1>
+                <p class="welcome">Welcome to your Sustainable DevOps Platform!</p>
+            </div>
+            <span class="status">● System Active</span>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Pipeline Status</h3>
+                <h2>Ready</h2>
+            </div>
+
+            <div class="card">
+                <h3>Energy Efficiency</h3>
+                <h2>Optimized</h2>
+            </div>
+
+            <div class="card">
+                <h3>Cloud Deployment</h3>
+                <h2>Available</h2>
+            </div>
+        </div>
+
+        <h2 style="margin-bottom:20px;">Project Modules</h2>
+
+        <div class="modules">
+
+            <div class="module">
+                <h2>⚙ Module 1</h2>
+                <h3>Energy-Aware CI/CD Pipeline Optimization</h3>
+                <p>
+                    Monitor pipeline execution, CPU usage, memory usage
+                    and estimated energy consumption. Identify
+                    opportunities to optimize the CI/CD process.
+                </p>
+                <button onclick="location.href='/module1'">
+                    Open Module 1
+                </button>
+            </div>
+
+            <div class="module">
+                <h2>☁ Module 2</h2>
+                <h3>Sustainable Cloud Deployment and Optimization</h3>
+                <p>
+                    Monitor cloud resources, manage deployment
+                    configurations and optimize CPU and memory
+                    allocation for sustainable deployment.
+                </p>
+                <button onclick="location.href='/module2'">
+                    Open Module 2
+                </button>
+            </div>
+
+        </div>
+
+        <div class="activity">
+            <h2>Recent Activity</h2>
+            <p>✓ GreenDeploy application initialized</p>
+            <p>✓ Flask server is running</p>
+            <p>✓ Dashboard interface created</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
