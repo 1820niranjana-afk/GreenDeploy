@@ -2,370 +2,848 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module 2 - GreenDeploy</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2 - GreenDeploy</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-        body {
-            display: flex;
-            min-height: 100vh;
-            background: #f1f7f2;
-            color: #183b2b;
-        }
+body {
+    display: flex;
+    background: #f1f7f2;
+    color: #183b2b;
+    min-height: 100vh;
+}
 
-        .sidebar {
-            width: 250px;
-            min-width: 250px;
-            min-height: 100vh;
-            background: #10452e;
-            color: white;
-            padding: 25px 20px;
-        }
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background: #10452e;
+    color: white;
+    padding: 25px 20px;
+    flex-shrink: 0;
+}
 
-        .sidebar h2 {
-            color: #75f09c;
-            margin-bottom: 45px;
-        }
+.sidebar h2 {
+    color: #75f09c;
+    margin-bottom: 45px;
+}
 
-        .sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 15px 5px;
-            margin-bottom: 10px;
-        }
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px 5px;
+    margin-bottom: 10px;
+}
 
-        .sidebar a:hover {
-            color: #75f09c;
-        }
+.sidebar a:hover {
+    color: #75f09c;
+}
 
-        .main {
-            flex: 1;
-            min-width: 0;
-            padding: 35px;
-        }
+.main {
+    flex: 1;
+    padding: 35px;
+    min-width: 0;
+}
 
-        .main h1 {
-            color: #167343;
-            margin-bottom: 10px;
-        }
+h1 {
+    color: #167343;
+    margin-bottom: 10px;
+}
 
-        .subtitle {
-            color: #63766a;
-            margin-bottom: 30px;
-        }
+.subtitle {
+    color: #63766a;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
-        }
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
 
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px #00000010;
-            min-width: 0;
-        }
+.card, .section {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px #00000010;
+}
 
-        .card h3 {
-            color: #52705e;
-            margin-bottom: 18px;
-        }
+.card h3 {
+    color: #52705e;
+    margin-bottom: 18px;
+}
 
-        .value {
-            font-size: 28px;
-            font-weight: bold;
-            color: #16834b;
-        }
+.value {
+    font-size: 28px;
+    font-weight: bold;
+    color: #16834b;
+}
 
-        .detail {
-            margin-top: 10px;
-            color: #63766a;
-            font-size: 14px;
-        }
+.detail {
+    margin-top: 10px;
+    color: #63766a;
+    font-size: 14px;
+}
 
-        .section {
-            background: white;
-            padding: 25px;
-            margin-top: 22px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px #00000010;
-        }
+.section {
+    margin-top: 22px;
+}
 
-        .section h2 {
-            color: #167343;
-            margin-bottom: 18px;
-        }
+.section h2 {
+    color: #167343;
+    margin-bottom: 20px;
+}
 
-        .status {
-            color: #16834b;
-            font-weight: bold;
-            margin-top: 8px;
-        }
+.progress {
+    background: #e2e9e3;
+    height: 12px;
+    border-radius: 10px;
+    margin-top: 12px;
+    overflow: hidden;
+}
 
-        .recommendation {
-            background: #e9f6ec;
-            padding: 18px;
-            border-radius: 8px;
-            line-height: 1.7;
-        }
+.progress-bar {
+    background: #209653;
+    height: 100%;
+    width: 0%;
+    transition: width 0.4s;
+}
 
-        .progress {
-            background: #e2e9e3;
-            height: 12px;
-            border-radius: 10px;
-            margin-top: 12px;
-            overflow: hidden;
-        }
+.recommendation {
+    background: #e9f6ec;
+    padding: 18px;
+    border-radius: 8px;
+    line-height: 1.7;
+}
 
-        .progress-bar {
-            background: #209653;
-            height: 100%;
-            width: 0%;
-            transition: width 0.4s;
-        }
+.status {
+    color: #16834b;
+    font-weight: bold;
+    margin-top: 12px;
+}
 
-        .error {
-            background: #fdeaea;
-            color: #a12626;
-        }
+.optimization-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
 
-        @media (max-width: 900px) {
-            .cards {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
+.field label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #52705e;
+}
 
-        @media (max-width: 700px) {
-            body {
-                display: block;
-            }
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #b8cbbd;
+    border-radius: 7px;
+    font-size: 15px;
+    background: white;
+}
 
-            .sidebar {
-                width: 100%;
-                min-width: 0;
-                min-height: auto;
-            }
+button {
+    background: #16834b;
+    color: white;
+    border: none;
+    padding: 13px 24px;
+    border-radius: 7px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 22px;
+}
 
-            .main {
-                padding: 20px;
-            }
+button:hover {
+    background: #10452e;
+}
 
-            .cards {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+button:disabled {
+    background: #8ca99a;
+    cursor: not-allowed;
+}
+
+.message {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 7px;
+    display: none;
+    line-height: 1.5;
+}
+
+.success {
+    display: block;
+    background: #e2f5e8;
+    color: #126b37;
+}
+
+.error {
+    display: block;
+    background: #fde8e8;
+    color: #a32121;
+}
+
+.comparison {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.comparison-box {
+    background: #f1f7f2;
+    padding: 20px;
+    border-radius: 8px;
+    line-height: 2;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    text-align: left;
+    padding: 13px;
+    border-bottom: 1px solid #e2e9e3;
+    white-space: nowrap;
+}
+
+th {
+    color: #167343;
+    background: #f1f7f2;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+@media (max-width: 700px) {
+    body {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .main {
+        padding: 20px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <h2>🌱 GreenDeploy</h2>
+<aside class="sidebar">
+    <h2>🌱 GreenDeploy</h2>
+    <a href="/">Dashboard</a>
+    <a href="/module1">Module 1 - CI/CD</a>
+    <a href="/module2">Module 2 - Cloud</a>
+    <a href="/reports">Reports</a>
+</aside>
 
-        <a href="/">Dashboard</a>
-        <a href="/module1">Module 1 - CI/CD</a>
-        <a href="/module2">Module 2 - Cloud</a>
-        <a href="/reports">Reports</a>
-    </aside>
+<main class="main">
 
-    <!-- Main Content -->
-    <main class="main">
+<h1>Sustainable Cloud Deployment</h1>
 
-        <h1>Sustainable Cloud Deployment</h1>
+<p class="subtitle">
+    Monitor Docker resources and optimize cloud deployment
+    for efficient resource utilization.
+</p>
 
-        <p class="subtitle">
-            Monitor Docker resources and identify optimization opportunities.
+<!-- LIVE MONITORING -->
+
+<div class="cards">
+
+    <div class="card">
+        <h3>Docker Environment</h3>
+        <div class="value" id="dockerStatus">Checking...</div>
+        <p class="detail" id="containerDetail">
+            Connecting to Docker...
         </p>
+    </div>
 
-        <!-- Monitoring Cards -->
-        <div class="cards">
+    <div class="card">
+        <h3>CPU Usage</h3>
+        <div class="value" id="cpu">Loading...</div>
+        <div class="progress">
+            <div class="progress-bar" id="cpuBar"></div>
+        </div>
+        <p class="detail">Container CPU utilization</p>
+    </div>
 
-            <!-- Docker Status -->
-            <div class="card">
-                <h3>Docker Environment</h3>
+    <div class="card">
+        <h3>RAM Usage</h3>
+        <div class="value" id="ram">Loading...</div>
+        <div class="progress">
+            <div class="progress-bar" id="ramBar"></div>
+        </div>
+        <p class="detail" id="memoryDetails">
+            Waiting for memory data...
+        </p>
+    </div>
 
-                <div class="value" id="dockerStatus">
-                    Checking...
-                </div>
+</div>
 
-                <p class="detail" id="dockerDetails">
-                    Checking container connection...
-                </p>
-            </div>
+<!-- CURRENT RESOURCE ALLOCATION -->
 
-            <!-- CPU Usage -->
-            <div class="card">
-                <h3>CPU Usage</h3>
+<div class="section">
 
-                <div class="value" id="cpu">
-                    Loading...
-                </div>
+    <h2>Current Resource Allocation</h2>
 
-                <div class="progress">
-                    <div class="progress-bar" id="cpuBar"></div>
-                </div>
+    <div class="comparison">
 
-                <p class="detail">
-                    Container CPU utilization
-                </p>
-            </div>
-
-            <!-- RAM Usage -->
-            <div class="card">
-                <h3>RAM Usage</h3>
-
-                <div class="value" id="ram">
-                    Loading...
-                </div>
-
-                <div class="progress">
-                    <div class="progress-bar" id="ramBar"></div>
-                </div>
-
-                <p class="detail" id="memoryDetails">
-                    Waiting for memory data...
-                </p>
-            </div>
-
+        <div class="comparison-box">
+            <h3>CPU Allocation</h3>
+            <div class="value" id="currentCPU">Loading...</div>
+            <p class="detail">Configured CPU cores</p>
         </div>
 
-        <!-- Resource Optimization -->
-        <div class="section">
-
-            <h2>Resource Optimization</h2>
-
-            <div class="recommendation" id="recommendation">
-                Collecting Docker resource information...
-            </div>
-
+        <div class="comparison-box">
+            <h3>RAM Allocation</h3>
+            <div class="value" id="currentRAM">Loading...</div>
+            <p class="detail">Configured memory limit</p>
         </div>
 
-        <!-- Deployment Overview -->
-        <div class="section">
+    </div>
 
-            <h2>Deployment Overview</h2>
+</div>
 
-            <p>Application: GreenDeploy</p>
-            <p>Container Image: greendeploy</p>
-            <p>Container Name: greendeploy-container</p>
-            <p>Deployment Port: 5000</p>
+<!-- RESOURCE OPTIMIZATION -->
 
-            <p class="status">
-                Docker deployment configured
-            </p>
+<div class="section">
 
+    <h2>Automatic Resource Optimization</h2>
+
+    <p class="subtitle">
+        Analyze resource usage and select suitable CPU
+        and RAM limits for the Docker container.
+    </p>
+
+    <div class="optimization-grid">
+
+        <div class="field">
+            <label for="cpuSelect">Select CPU Allocation</label>
+
+            <select id="cpuSelect">
+                <option value="0.5">0.5 CPU Core</option>
+                <option value="1">1 CPU Core</option>
+                <option value="2">2 CPU Cores</option>
+            </select>
         </div>
 
-    </main>
+        <div class="field">
+            <label for="ramSelect">Select RAM Allocation</label>
 
-    <!-- Docker Monitoring JavaScript -->
-    <script>
+            <select id="ramSelect">
+                <option value="256">256 MB</option>
+                <option value="512">512 MB</option>
+                <option value="1024">1024 MB</option>
+            </select>
+        </div>
 
-        async function updateCloudMetrics() {
+    </div>
 
-            const status = document.getElementById("dockerStatus");
-            const details = document.getElementById("dockerDetails");
-            const recommendation =
-                document.getElementById("recommendation");
+    <button id="optimizeButton" onclick="applyOptimization()">
+        Apply Optimization
+    </button>
 
-            try {
+    <div class="message" id="optimizationMessage"></div>
 
-                const response = await fetch("/api/docker-metrics");
+</div>
 
-                if (!response.ok) {
-                    throw new Error("Docker metrics unavailable");
-                }
+<!-- RECOMMENDATION -->
 
-                const data = await response.json();
+<div class="section">
 
-                // Docker status
-                status.innerText = "Active";
-                details.innerText = "Container connected successfully";
+    <h2>Resource Optimization Recommendation</h2>
 
-                // CPU usage
-                document.getElementById("cpu").innerText =
-                    data.cpu + "%";
+    <div class="recommendation" id="recommendation">
+        Collecting Docker resource information...
+    </div>
 
-                document.getElementById("cpuBar").style.width =
-                    Math.min(Math.max(data.cpu, 0), 100) + "%";
+</div>
 
-                // RAM usage
-                document.getElementById("ram").innerText =
-                    data.ram + "%";
+<!-- BEFORE AND AFTER -->
 
-                document.getElementById("ramBar").style.width =
-                    Math.min(Math.max(data.ram, 0), 100) + "%";
+<div class="section">
 
-                // RAM details
-                document.getElementById("memoryDetails").innerText =
-                    data.memory_used_mb + " MB used / " +
-                    data.memory_limit_mb + " MB limit";
+    <h2>Before and After Comparison</h2>
 
-                // Resource optimization recommendations
-                if (data.cpu > 80 || data.ram > 80) {
+    <div class="comparison">
 
-                    recommendation.innerText =
-                        "High Docker resource usage detected. " +
-                        "Consider reviewing CPU and memory allocation.";
+        <div class="comparison-box">
+            <h3>Before Optimization</h3>
+            <p id="beforeCPU">CPU: --</p>
+            <p id="beforeRAM">RAM: --</p>
+        </div>
 
-                    recommendation.classList.add("error");
+        <div class="comparison-box">
+            <h3>After Optimization</h3>
+            <p id="afterCPU">CPU: --</p>
+            <p id="afterRAM">RAM: --</p>
+        </div>
 
-                } else if (data.cpu < 20 && data.ram < 50) {
+    </div>
 
-                    recommendation.innerText =
-                        "Docker resource usage is low. The container " +
-                        "is operating efficiently. Continue monitoring " +
-                        "before reducing resource allocation.";
+</div>
 
-                    recommendation.classList.remove("error");
+<!-- OPTIMIZATION HISTORY -->
 
-                } else {
+<div class="section">
 
-                    recommendation.innerText =
-                        "Docker resource usage is within the configured " +
-                        "monitoring thresholds.";
+    <h2>Optimization History</h2>
 
-                    recommendation.classList.remove("error");
-                }
+    <div class="table-container">
 
-            } catch (error) {
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Previous CPU</th>
+                    <th>New CPU</th>
+                    <th>Previous RAM</th>
+                    <th>New RAM</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
 
-                status.innerText = "Unavailable";
+            <tbody id="historyBody">
+                <tr>
+                    <td colspan="6">Loading history...</td>
+                </tr>
+            </tbody>
+        </table>
 
-                details.innerText =
-                    "Unable to connect to Docker container";
+    </div>
 
-                recommendation.innerText =
-                    "Unable to retrieve Docker metrics. " +
-                    "Check whether Docker Desktop and the " +
-                    "GreenDeploy container are running.";
+</div>
 
-                recommendation.classList.add("error");
+<!-- DEPLOYMENT OVERVIEW -->
 
-                console.error("Docker monitoring error:", error);
-            }
+<div class="section">
+
+    <h2>Deployment Overview</h2>
+
+    <p>Application: GreenDeploy</p>
+    <p>Container Image: greendeploy</p>
+    <p>Container Name: greendeploy-container</p>
+    <p>Deployment Port: 5000</p>
+
+    <p class="status" id="deploymentStatus">
+        Checking Docker deployment...
+    </p>
+
+</div>
+
+</main>
+
+<script>
+
+// ==================================================
+// 1. FORMAT FUNCTIONS
+// ==================================================
+
+function formatCPU(value) {
+
+    if (value === null || value === undefined ||
+        value === "" || value === "N/A") {
+        return "N/A";
+    }
+
+    const number = Number(value);
+
+    return Number.isFinite(number)
+        ? number + " Cores"
+        : "N/A";
+}
+
+
+function formatRAM(value) {
+
+    if (value === null || value === undefined ||
+        value === "" || value === "N/A") {
+        return "N/A";
+    }
+
+    const number = Number(value);
+
+    return Number.isFinite(number)
+        ? number + " MB"
+        : "N/A";
+}
+
+
+async function fetchJSON(url, options = {}) {
+
+    const response = await fetch(url, options);
+
+    const data = await response.json();
+
+    if (!response.ok || data.success === false) {
+        throw new Error(
+            data.error || "Server request failed"
+        );
+    }
+
+    return data;
+}
+
+
+// ==================================================
+// 2. LIVE DOCKER MONITORING
+// ==================================================
+
+async function updateCloudMetrics() {
+
+    try {
+
+        const data = await fetchJSON(
+            "/api/docker-metrics"
+        );
+
+        document.getElementById("dockerStatus").innerText =
+            "Active";
+
+        document.getElementById("containerDetail").innerText =
+            "Container connected successfully";
+
+        document.getElementById("deploymentStatus").innerText =
+            "Docker deployment configured successfully";
+
+        const cpu = Number(data.cpu) || 0;
+        const ram = Number(data.ram) || 0;
+
+        document.getElementById("cpu").innerText =
+            cpu.toFixed(2) + "%";
+
+        document.getElementById("ram").innerText =
+            ram.toFixed(2) + "%";
+
+        document.getElementById("cpuBar").style.width =
+            Math.min(Math.max(cpu, 0), 100) + "%";
+
+        document.getElementById("ramBar").style.width =
+            Math.min(Math.max(ram, 0), 100) + "%";
+
+        document.getElementById("memoryDetails").innerText =
+            data.memory_used_mb + " MB used / " +
+            data.memory_limit_mb + " MB limit";
+
+        // Generate recommendation.
+
+        const recommendation =
+            document.getElementById("recommendation");
+
+        if (cpu > 80 || ram > 80) {
+
+            recommendation.innerText =
+                "High resource usage detected. Consider increasing CPU or RAM allocation and reviewing the application workload.";
+
+        } else if (cpu < 20 && ram < 20) {
+
+            recommendation.innerText =
+                "Resource usage is low. The container is operating efficiently. Consider testing a lower resource allocation if the workload remains stable.";
+
+        } else {
+
+            recommendation.innerText =
+                "CPU and RAM usage are within the configured monitoring thresholds. Current resource allocation is suitable for the observed workload.";
+
         }
 
-        // Initial monitoring
-        updateCloudMetrics();
+    } catch (error) {
 
-        // Refresh metrics every 3 seconds
-        setInterval(updateCloudMetrics, 3000);
+        document.getElementById("dockerStatus").innerText =
+            "Unavailable";
 
-    </script>
+        document.getElementById("containerDetail").innerText =
+            error.message;
+
+        document.getElementById("deploymentStatus").innerText =
+            "Docker deployment unavailable";
+
+        document.getElementById("recommendation").innerText =
+            "Unable to retrieve Docker resource metrics. Check the Docker container and connection.";
+
+        console.error(error);
+    }
+}
+
+
+// ==================================================
+// 3. LOAD CURRENT RESOURCE CONFIGURATION
+// ==================================================
+
+async function loadContainerConfig() {
+
+    try {
+
+        const data = await fetchJSON(
+            "/api/container-config"
+        );
+
+        document.getElementById("currentCPU").innerText =
+            formatCPU(data.cpu_cores);
+
+        document.getElementById("currentRAM").innerText =
+            formatRAM(data.memory_mb);
+
+        if (data.cpu_cores !== null) {
+
+            document.getElementById("cpuSelect").value =
+                String(data.cpu_cores);
+
+        }
+
+        if (data.memory_mb !== null) {
+
+            document.getElementById("ramSelect").value =
+                String(data.memory_mb);
+
+        }
+
+    } catch (error) {
+
+        document.getElementById("currentCPU").innerText =
+            "Unavailable";
+
+        document.getElementById("currentRAM").innerText =
+            "Unavailable";
+
+        console.error(error);
+    }
+}
+
+
+// ==================================================
+// 4. APPLY RESOURCE OPTIMIZATION
+// ==================================================
+
+async function applyOptimization() {
+
+    const button =
+        document.getElementById("optimizeButton");
+
+    const message =
+        document.getElementById("optimizationMessage");
+
+    const cpu = parseFloat(
+        document.getElementById("cpuSelect").value
+    );
+
+    const ram = parseInt(
+        document.getElementById("ramSelect").value,
+        10
+    );
+
+    button.disabled = true;
+    button.innerText = "Applying...";
+
+    message.className = "message";
+    message.style.display = "none";
+
+    try {
+
+        // Get previous configuration.
+
+        const previous = await fetchJSON(
+            "/api/container-config"
+        );
+
+        // Apply new configuration.
+
+        const result = await fetchJSON(
+            "/api/optimize-container",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    cpu_cores: cpu,
+                    memory_mb: ram
+                })
+            }
+        );
+
+        // Before optimization.
+
+        document.getElementById("beforeCPU").innerText =
+            "CPU: " + formatCPU(
+                result.previous_cpu !== undefined
+                    ? result.previous_cpu
+                    : previous.cpu_cores
+            );
+
+        document.getElementById("beforeRAM").innerText =
+            "RAM: " + formatRAM(
+                result.previous_ram !== undefined
+                    ? result.previous_ram
+                    : previous.memory_mb
+            );
+
+        // After optimization.
+
+        document.getElementById("afterCPU").innerText =
+            "CPU: " + formatCPU(result.new_cpu);
+
+        document.getElementById("afterRAM").innerText =
+            "RAM: " + formatRAM(result.new_ram);
+
+        message.innerText =
+            "Success! " + result.message;
+
+        message.className = "message success";
+
+        // Refresh dashboard.
+
+        await Promise.all([
+            loadContainerConfig(),
+            updateCloudMetrics(),
+            loadOptimizationHistory()
+        ]);
+
+    } catch (error) {
+
+        message.innerText =
+            "Optimization failed: " + error.message;
+
+        message.className = "message error";
+
+    } finally {
+
+        message.style.display = "block";
+
+        button.disabled = false;
+
+        button.innerText = "Apply Optimization";
+    }
+}
+
+
+// ==================================================
+// 5. LOAD OPTIMIZATION HISTORY
+// ==================================================
+
+async function loadOptimizationHistory() {
+
+    const body =
+        document.getElementById("historyBody");
+
+    try {
+
+        const data = await fetchJSON(
+            "/api/optimization-history"
+        );
+
+        body.innerHTML = "";
+
+        if (!data.history || data.history.length === 0) {
+
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+
+            cell.colSpan = 6;
+            cell.textContent =
+                "No optimization history available yet.";
+
+            row.appendChild(cell);
+            body.appendChild(row);
+
+            return;
+        }
+
+        // Display newest records first.
+
+        data.history.forEach(item => {
+
+            const row = document.createElement("tr");
+
+            const values = [
+                item.date || "--",
+                formatCPU(item.previous_cpu),
+                formatCPU(item.new_cpu),
+                formatRAM(item.previous_ram),
+                formatRAM(item.new_ram),
+                item.status || "--"
+            ];
+
+            values.forEach(value => {
+
+                const cell = document.createElement("td");
+
+                cell.textContent = value;
+
+                row.appendChild(cell);
+
+            });
+
+            body.appendChild(row);
+
+        });
+
+    } catch (error) {
+
+        body.innerHTML = "";
+
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+
+        cell.colSpan = 6;
+        cell.textContent =
+            "Unable to load optimization history.";
+
+        row.appendChild(cell);
+        body.appendChild(row);
+
+        console.error(error);
+    }
+}
+
+
+// ==================================================
+// 6. INITIALIZE DASHBOARD
+// ==================================================
+
+async function initializeDashboard() {
+
+    await Promise.all([
+        updateCloudMetrics(),
+        loadContainerConfig(),
+        loadOptimizationHistory()
+    ]);
+
+}
+
+
+// ==================================================
+// 7. AUTOMATIC REFRESH
+// ==================================================
+
+initializeDashboard();
+
+// Refresh Docker metrics every 5 seconds.
+
+setInterval(updateCloudMetrics, 5000);
+
+</script>
 
 </body>
 </html>
